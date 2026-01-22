@@ -1,0 +1,43 @@
+@Hrms.EmployeeService.API_HostAddress = http://localhost:5067
+@apiUrl = {{Hrms.EmployeeService.API_HostAddress}}/api/employees
+@contentType = application/json
+
+# Replace with your actual JWT token from Keycloak
+@authToken = eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJhNjRIbTc1VlJ2al9xbm9Bb1JjQ2VIWm9SU094S1FRUWhjRWN3U1hWREEwIn0.eyJleHAiOjE3NjkwMTEzNDcsImlhdCI6MTc2OTAxMTA0NywianRpIjoiZGZjNDk5NjgtZjkxYi00MDc1LWExY2UtMWUzM2U1OTNkOGU1IiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL3JlYWxtcy9ocm1zLXJlYWxtIiwiYXVkIjoiYWNjb3VudCIsInN1YiI6IjkwNmJiZTY0LTY3ZTYtNDI3YS04NmIwLWUyMTNjMDJlNmIzZCIsInR5cCI6IkJlYXJlciIsImF6cCI6ImhybXMtYXBpIiwic2lkIjoiZDBhZjlhNzQtZDhmYy00NzFmLTlmOWYtYTBiZGY2OWM0MTkwIiwiYWNyIjoiMSIsInJlYWxtX2FjY2VzcyI6eyJyb2xlcyI6WyJlbXBsb3llZTp3cml0ZSIsIm9mZmxpbmVfYWNjZXNzIiwidW1hX2F1dGhvcml6YXRpb24iLCJlbXBsb3llZTpyZWFkIiwiZGVmYXVsdC1yb2xlcy1ocm1zLXJlYWxtIl19LCJyZXNvdXJjZV9hY2Nlc3MiOnsiYWNjb3VudCI6eyJyb2xlcyI6WyJtYW5hZ2UtYWNjb3VudCIsIm1hbmFnZS1hY2NvdW50LWxpbmtzIiwidmlldy1wcm9maWxlIl19fSwic2NvcGUiOiJlbWFpbCBwcm9maWxlIiwiZW1haWxfdmVyaWZpZWQiOmZhbHNlLCJzY29wZSI6WyJlbXBsb3llZTp3cml0ZSIsIm9mZmxpbmVfYWNjZXNzIiwidW1hX2F1dGhvcml6YXRpb24iLCJlbXBsb3llZTpyZWFkIiwiZGVmYXVsdC1yb2xlcy1ocm1zLXJlYWxtIl0sIm5hbWUiOiJSYWogTWFuYWdlciIsInByZWZlcnJlZF91c2VybmFtZSI6InJhai5tYW5hZ2VyIiwiZ2l2ZW5fbmFtZSI6IlJhaiIsImZhbWlseV9uYW1lIjoiTWFuYWdlciIsImVtYWlsIjoicmFqLm1hbmFnZXJAaHJtcy5sb2NhbCJ9.SRavIP3-gbpc0kyPb4T5aAcFFnQ_4I_UQWeU6R3HtD_AULGhR-3N6Tkl09hPijGmGJrdvP6URwvzBUjwvNcravZvV8Y3fnt9cP1CKpWa3QrwAzObb3pyGtLbIXk7E0eYHkPRcKigX6KKNujWiGxyVev1d4QPgAMMzps1ez5rygyMtuiZNZTkxzDZi3ErtGI2ARd9xwAjw0tb3r8qiKxP1Sxq4EJjUh-xJgXfwdg3gaxbq81adcn6b_QOg5l9WuKf0gFlCNn9zDv2xmKyrPONvQeqIf8n5r-IcHuKlAZUmpAYOE_C5d9atIbQzcXPZlPhDNyALUCoWisa5oVJIVA47A
+
+###############################################
+# Health Checks
+###############################################
+
+### Health Check - General
+GET {{Hrms.EmployeeService.API_HostAddress}}/health
+
+### Health Check - Ready
+GET {{Hrms.EmployeeService.API_HostAddress}}/health/ready
+
+### Health Check - Live
+GET {{Hrms.EmployeeService.API_HostAddress}}/health/live
+
+###############################################
+
+###############################################
+# Employee Endpoints (Authenticated)
+###############################################
+
+### 1. Get All Employees
+# @name getAllEmployees
+GET {{apiUrl}}
+Authorization: Bearer {{authToken}}
+Accept: {{contentType}}
+
+###
+### 2. Get Employee by ID
+# Replace with actual employee ID
+@employeeId = dc932917-f3bf-4259-bc21-0a7436b2c2bf
+
+GET {{apiUrl}}/{{employeeId}}
+Authorization: Bearer {{authToken}}
+Accept: {{contentType}}
+
+###
+

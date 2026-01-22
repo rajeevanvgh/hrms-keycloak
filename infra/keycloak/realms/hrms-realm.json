@@ -1,0 +1,84 @@
+{
+  "realm": "hrms-realm",
+  "enabled": true,
+
+  "clients": [
+    {
+      "clientId": "hrms-api",
+      "name": "HRMS API",
+      "protocol": "openid-connect",
+      "bearerOnly": true,
+      "publicClient": false,
+      "standardFlowEnabled": false,
+      "directAccessGrantsEnabled": false,
+      "serviceAccountsEnabled": false,
+      "fullScopeAllowed": false
+    },
+    {
+      "clientId": "hrms-client",
+      "name": "HRMS Public Client",
+      "protocol": "openid-connect",
+      "publicClient": true,
+      "bearerOnly": false,
+      "standardFlowEnabled": true,
+      "directAccessGrantsEnabled": true,
+      "serviceAccountsEnabled": false,
+      "fullScopeAllowed": true,
+      "redirectUris": ["*"],
+      "webOrigins": ["*"]
+    }
+  ],
+
+  "roles": {
+    "client": {
+      "hrms-api": [
+        { "name": "employee.read" },
+        { "name": "employee.write" }
+      ]
+    }
+  },
+
+  "users": [
+    {
+      "username": "admin.user",
+      "enabled": true,
+      "emailVerified": true,
+      "firstName": "Admin",
+      "lastName": "User",
+      "email": "admin@hrms.local",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "Admin@123",
+          "temporary": false
+        }
+      ],
+      "clientRoles": {
+        "hrms-api": [
+          "employee.read",
+          "employee.write"
+        ]
+      }
+    },
+    {
+      "username": "employee.viewer",
+      "enabled": true,
+      "emailVerified": true,
+      "firstName": "Employee",
+      "lastName": "Viewer",
+      "email": "viewer@hrms.local",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "Viewer@123",
+          "temporary": false
+        }
+      ],
+      "clientRoles": {
+        "hrms-api": [
+          "employee.read"
+        ]
+      }
+    }
+  ]
+}

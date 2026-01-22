@@ -1,0 +1,340 @@
+{
+  "info": {
+    "_postman_id": "1a09b319-eca5-4bbc-b450-fd2bbe0ad91f",
+    "name": "Hrms",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "31318316"
+  },
+  "item": [
+    {
+      "name": "AuthenticateViewer",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "// Parse the JSON response\r",
+              "var jsonData = pm.response.json();\r",
+              "\r",
+              "// Extract the token (adjust 'access_token' to match your API's key name)\r",
+              "var token = jsonData.access_token;\r",
+              "\r",
+              "// Save to a Global variable\r",
+              "pm.globals.set(\"api_access_token\", token);\r",
+              "\r",
+              "console.log(\"Token has been saved to globals!\");"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": [
+            {
+              "key": "client_id",
+              "value": "hrms-client",
+              "type": "text",
+              "uuid": "9c720d56-60fc-4175-82a9-0c9e8399d7b9"
+            },
+            {
+              "key": "grant_type",
+              "value": "password",
+              "type": "text",
+              "uuid": "20ed1145-b171-4653-9998-549f25c1eace"
+            },
+            {
+              "key": "username",
+              "value": "employee.viewer",
+              "type": "text",
+              "uuid": "6d6cf9ea-cd4f-4596-9c2f-31827543ebb9"
+            },
+            {
+              "key": "password",
+              "value": "Viewer@123",
+              "type": "text",
+              "uuid": "44ce7050-d55f-4379-8941-44a6c08335c3"
+            },
+            {
+              "key": "client_secret",
+              "value": "NKLG0GYIfiDPs4xvT7CfgmUxFh6RoobZ",
+              "type": "text",
+              "uuid": "160d0b58-9cd6-4336-8596-12d7ab929678",
+              "disabled": true
+            }
+          ]
+        },
+        "url": {
+          "raw": "http://keycloak:8080/realms/hrms-realm/protocol/openid-connect/token",
+          "protocol": "http",
+          "host": [
+            "keycloak"
+          ],
+          "port": "8080",
+          "path": [
+            "realms",
+            "hrms-realm",
+            "protocol",
+            "openid-connect",
+            "token"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "AuthenticateAdmin",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "// Parse the JSON response\r",
+              "var jsonData = pm.response.json();\r",
+              "\r",
+              "// Extract the token (adjust 'access_token' to match your API's key name)\r",
+              "var token = jsonData.access_token;\r",
+              "\r",
+              "// Save to a Global variable\r",
+              "pm.globals.set(\"api_access_token\", token);\r",
+              "\r",
+              "console.log(\"Token has been saved to globals!\");"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": [
+            {
+              "key": "client_id",
+              "value": "hrms-client",
+              "type": "text",
+              "uuid": "9c720d56-60fc-4175-82a9-0c9e8399d7b9"
+            },
+            {
+              "key": "grant_type",
+              "value": "password",
+              "type": "text",
+              "uuid": "20ed1145-b171-4653-9998-549f25c1eace"
+            },
+            {
+              "key": "username",
+              "value": "admin.user",
+              "type": "text",
+              "uuid": "6d6cf9ea-cd4f-4596-9c2f-31827543ebb9"
+            },
+            {
+              "key": "password",
+              "value": "Admin@123",
+              "type": "text",
+              "uuid": "160d0b58-9cd6-4336-8596-12d7ab929678"
+            }
+          ]
+        },
+        "url": {
+          "raw": "http://keycloak:8080/realms/hrms-realm/protocol/openid-connect/token",
+          "protocol": "http",
+          "host": [
+            "keycloak"
+          ],
+          "port": "8080",
+          "path": [
+            "realms",
+            "hrms-realm",
+            "protocol",
+            "openid-connect",
+            "token"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "AddEmployee",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{api_access_token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"firstName\": \"Raj01\r\n  \"lastName\": \"Vani2\",\r\n  \"email\": \"rajeevan.vani2@company.com\",\r\n  \"phoneNumber\": \"+1234567889\",\r\n  \"department\": \"IT\",\r\n  \"position\": \"Software Developer\",\r\n  \"hireDate\": \"2026-01-23\",\r\n  \"salary\": 85000\r\n}\r\n",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:5067/api/Employees",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5067",
+          "path": [
+            "api",
+            "Employees"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "GetAllEmployees",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJhNjRIbTc1VlJ2al9xbm9Bb1JjQ2VIWm9SU094S1FRUWhjRWN3U1hWREEwIn0.eyJleHAiOjE3NjkwMDk3OTAsImlhdCI6MTc2OTAwOTQ5MCwianRpIjoiNGMxZDYwZTItMGViZC00ZjYyLThjOWMtYzQ4Y2U4MzZhMTFmIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL3JlYWxtcy9ocm1zLXJlYWxtIiwiYXVkIjoiYWNjb3VudCIsInN1YiI6ImJjZjZkN2U5LTllZTctNDVlYy1iMjRkLTM4YTk1MmFhYTkwZCIsInR5cCI6IkJlYXJlciIsImF6cCI6ImhybXMtYXBpIiwic2lkIjoiOWRhY2Q4ZWQtYmYzZC00NjA5LWI5MDItMDgzMzUwNGQ1N2QzIiwiYWNyIjoiMSIsInJlYWxtX2FjY2VzcyI6eyJyb2xlcyI6WyJvZmZsaW5lX2FjY2VzcyIsInVtYV9hdXRob3JpemF0aW9uIiwiZW1wbG95ZWU6cmVhZCIsImRlZmF1bHQtcm9sZXMtaHJtcy1yZWFsbSJdfSwicmVzb3VyY2VfYWNjZXNzIjp7ImFjY291bnQiOnsicm9sZXMiOlsibWFuYWdlLWFjY291bnQiLCJtYW5hZ2UtYWNjb3VudC1saW5rcyIsInZpZXctcHJvZmlsZSJdfX0sInNjb3BlIjoiZW1haWwgcHJvZmlsZSIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwic2NvcGUiOlsib2ZmbGluZV9hY2Nlc3MiLCJ1bWFfYXV0aG9yaXphdGlvbiIsImVtcGxveWVlOnJlYWQiLCJkZWZhdWx0LXJvbGVzLWhybXMtcmVhbG0iXSwibmFtZSI6IlJhaiBFbXAiLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJyYWouZW1wIiwiZ2l2ZW5fbmFtZSI6IlJhaiIsImZhbWlseV9uYW1lIjoiRW1wIiwiZW1haWwiOiJyYWouZW1wQGhybXMubG9jYWwifQ.CBrmVUCwNNpk76fQGh4T6bn6ePbq7RiKIjWzoK1xMtnZvwMYnZhYyGyl6cg8JTq5sKkEigQ5cjhzdDdRuSAvaMbcxU5YnphpU-RP0gPvqM_KfG5YD7SaAvIbDRwoy6sW05Zel5ZzC1DzZY0j_2mG_lEEN9EC_FrRHRp8RaxnJz59ka71l7QhgNkKiSM0TylwJoRhtmp33cvdQ7pQv39o_0TvZmm4oGYBo1oKvjNkn4tS32tJj9RJGVTWIDL1eeF9DG8o1rNynLeY_befPheIhRpw0ha4gQUV_m5OxdLn33uuQAsIv_3c0oWTCW-__nuqaoOIxWWDAmv15iqy8eb95A",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:5067/api/Employees",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5067",
+          "path": [
+            "api",
+            "Employees"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "GetEmployeeById",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJhNjRIbTc1VlJ2al9xbm9Bb1JjQ2VIWm9SU094S1FRUWhjRWN3U1hWREEwIn0.eyJleHAiOjE3NjkwMDk3OTAsImlhdCI6MTc2OTAwOTQ5MCwianRpIjoiNGMxZDYwZTItMGViZC00ZjYyLThjOWMtYzQ4Y2U4MzZhMTFmIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL3JlYWxtcy9ocm1zLXJlYWxtIiwiYXVkIjoiYWNjb3VudCIsInN1YiI6ImJjZjZkN2U5LTllZTctNDVlYy1iMjRkLTM4YTk1MmFhYTkwZCIsInR5cCI6IkJlYXJlciIsImF6cCI6ImhybXMtYXBpIiwic2lkIjoiOWRhY2Q4ZWQtYmYzZC00NjA5LWI5MDItMDgzMzUwNGQ1N2QzIiwiYWNyIjoiMSIsInJlYWxtX2FjY2VzcyI6eyJyb2xlcyI6WyJvZmZsaW5lX2FjY2VzcyIsInVtYV9hdXRob3JpemF0aW9uIiwiZW1wbG95ZWU6cmVhZCIsImRlZmF1bHQtcm9sZXMtaHJtcy1yZWFsbSJdfSwicmVzb3VyY2VfYWNjZXNzIjp7ImFjY291bnQiOnsicm9sZXMiOlsibWFuYWdlLWFjY291bnQiLCJtYW5hZ2UtYWNjb3VudC1saW5rcyIsInZpZXctcHJvZmlsZSJdfX0sInNjb3BlIjoiZW1haWwgcHJvZmlsZSIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwic2NvcGUiOlsib2ZmbGluZV9hY2Nlc3MiLCJ1bWFfYXV0aG9yaXphdGlvbiIsImVtcGxveWVlOnJlYWQiLCJkZWZhdWx0LXJvbGVzLWhybXMtcmVhbG0iXSwibmFtZSI6IlJhaiBFbXAiLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJyYWouZW1wIiwiZ2l2ZW5fbmFtZSI6IlJhaiIsImZhbWlseV9uYW1lIjoiRW1wIiwiZW1haWwiOiJyYWouZW1wQGhybXMubG9jYWwifQ.CBrmVUCwNNpk76fQGh4T6bn6ePbq7RiKIjWzoK1xMtnZvwMYnZhYyGyl6cg8JTq5sKkEigQ5cjhzdDdRuSAvaMbcxU5YnphpU-RP0gPvqM_KfG5YD7SaAvIbDRwoy6sW05Zel5ZzC1DzZY0j_2mG_lEEN9EC_FrRHRp8RaxnJz59ka71l7QhgNkKiSM0TylwJoRhtmp33cvdQ7pQv39o_0TvZmm4oGYBo1oKvjNkn4tS32tJj9RJGVTWIDL1eeF9DG8o1rNynLeY_befPheIhRpw0ha4gQUV_m5OxdLn33uuQAsIv_3c0oWTCW-__nuqaoOIxWWDAmv15iqy8eb95A",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:5067/api/Employees",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5067",
+          "path": [
+            "api",
+            "Employees"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "UpdateEmployee",
+      "request": {
+        "method": "GET",
+        "header": []
+      },
+      "response": []
+    },
+    {
+      "name": "DeleteEmployee",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJhNjRIbTc1VlJ2al9xbm9Bb1JjQ2VIWm9SU094S1FRUWhjRWN3U1hWREEwIn0.eyJleHAiOjE3NjkwMDk3OTAsImlhdCI6MTc2OTAwOTQ5MCwianRpIjoiNGMxZDYwZTItMGViZC00ZjYyLThjOWMtYzQ4Y2U4MzZhMTFmIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL3JlYWxtcy9ocm1zLXJlYWxtIiwiYXVkIjoiYWNjb3VudCIsInN1YiI6ImJjZjZkN2U5LTllZTctNDVlYy1iMjRkLTM4YTk1MmFhYTkwZCIsInR5cCI6IkJlYXJlciIsImF6cCI6ImhybXMtYXBpIiwic2lkIjoiOWRhY2Q4ZWQtYmYzZC00NjA5LWI5MDItMDgzMzUwNGQ1N2QzIiwiYWNyIjoiMSIsInJlYWxtX2FjY2VzcyI6eyJyb2xlcyI6WyJvZmZsaW5lX2FjY2VzcyIsInVtYV9hdXRob3JpemF0aW9uIiwiZW1wbG95ZWU6cmVhZCIsImRlZmF1bHQtcm9sZXMtaHJtcy1yZWFsbSJdfSwicmVzb3VyY2VfYWNjZXNzIjp7ImFjY291bnQiOnsicm9sZXMiOlsibWFuYWdlLWFjY291bnQiLCJtYW5hZ2UtYWNjb3VudC1saW5rcyIsInZpZXctcHJvZmlsZSJdfX0sInNjb3BlIjoiZW1haWwgcHJvZmlsZSIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwic2NvcGUiOlsib2ZmbGluZV9hY2Nlc3MiLCJ1bWFfYXV0aG9yaXphdGlvbiIsImVtcGxveWVlOnJlYWQiLCJkZWZhdWx0LXJvbGVzLWhybXMtcmVhbG0iXSwibmFtZSI6IlJhaiBFbXAiLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJyYWouZW1wIiwiZ2l2ZW5fbmFtZSI6IlJhaiIsImZhbWlseV9uYW1lIjoiRW1wIiwiZW1haWwiOiJyYWouZW1wQGhybXMubG9jYWwifQ.CBrmVUCwNNpk76fQGh4T6bn6ePbq7RiKIjWzoK1xMtnZvwMYnZhYyGyl6cg8JTq5sKkEigQ5cjhzdDdRuSAvaMbcxU5YnphpU-RP0gPvqM_KfG5YD7SaAvIbDRwoy6sW05Zel5ZzC1DzZY0j_2mG_lEEN9EC_FrRHRp8RaxnJz59ka71l7QhgNkKiSM0TylwJoRhtmp33cvdQ7pQv39o_0TvZmm4oGYBo1oKvjNkn4tS32tJj9RJGVTWIDL1eeF9DG8o1rNynLeY_befPheIhRpw0ha4gQUV_m5OxdLn33uuQAsIv_3c0oWTCW-__nuqaoOIxWWDAmv15iqy8eb95A",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "PUT",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:5067/api/Employees/dc932917-f3bf-4259-bc21-0a7436b2c2bf",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5067",
+          "path": [
+            "api",
+            "Employees",
+            "dc932917-f3bf-4259-bc21-0a7436b2c2bf"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Debug",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{api_access_token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:5067/api/Employees/debug",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5067",
+          "path": [
+            "api",
+            "Employees",
+            "debug"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}

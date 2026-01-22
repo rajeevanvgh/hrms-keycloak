@@ -1,0 +1,60 @@
+services:
+  postgres:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: keycloak
+      POSTGRES_USER: keycloak
+      POSTGRES_PASSWORD: keycloak
+    volumes:
+      - keycloak-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U keycloak -d keycloak"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:26.0
+    command:
+      - start-dev
+      - --import-realm
+    environment:
+      KC_DB: postgres
+      KC_DB_URL: jdbc:postgresql://postgres:5432/keycloak
+      KC_DB_USERNAME: keycloak
+      KC_DB_PASSWORD: keycloak
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+
+      # IMPORTANT: hostname must match what API uses
+      KC_HOSTNAME: keycloak
+    volumes:
+      - ./keycloak/realms:/opt/keycloak/data/import
+    ports:
+      - "8080:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+    # Allow host machine to resolve "keycloak"
+    extra_hosts:
+      - "keycloak:host-gateway"
+
+  employee-service:
+    build:
+      context: ../src/Hrms.EmployeeService
+      dockerfile: Hrms.EmployeeService.Api/Dockerfile
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+
+      # API validates tokens using Docker hostname
+      Keycloak__Authority: http://keycloak:8080/realms/hrms-realm
+      Keycloak__Audience: hrms-api
+      Keycloak__RequireHttpsMetadata: "false"
+    ports:
+      - "5001:8080"
+    depends_on:
+      - keycloak
+
+volumes:
+  keycloak-data:

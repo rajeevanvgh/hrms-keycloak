@@ -1,0 +1,33 @@
+# Build outputs
+bin/
+obj/
+out/
+dist/
+
+# Visual Studio / Rider / VS Code
+.vs/
+.vscode/
+*.user
+*.suo
+
+# Logs and temp
+*.log
+*.tmp
+*.temp
+
+# OS junk
+Thumbs.db
+.DS_Store
+
+# Node / frontend
+node_modules/
+npm-debug.log*
+yarn-error.log*
+
+# Environment / secrets
+*.env
+*.env.*
+secrets.json
+
+# IDE configs (optional to ignore)
+.idea/
