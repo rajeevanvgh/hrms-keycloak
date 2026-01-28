@@ -83,10 +83,10 @@ builder.Services
 builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy("EmployeeRead", policy =>
-        policy.RequireRole("employee.read", "employee.write"));
+        policy.RequireRole("employee:read", "employee:write"));
 
     options.AddPolicy("EmployeeWrite", policy =>
-        policy.RequireRole("employee.write"));
+        policy.RequireRole("employee:write"));
 }); ;
 
 // Controllers
